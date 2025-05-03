@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<!--
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this template
+-->
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://wwww.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate = ~{layout}>
+
+
+
+    <body layout:fragment = "body">
+        <div class="container p-5 my-5 bg-dark text-white">
+            <h1 class = "vista" style = "text-align:center;">Usuario - Direccion</h1>
+            <div class = "">
+
+                <a class= "btn btn-danger" th:href="@{/Usuario/FormularioEdit?IdUsuario=}+${usuarioDirecciones.Usuario.IdUsuario}"><i class="bi bi-pencil-fill"></i> Editar Usuario</a>
+                <div class="row">
+                    <div class="card col-md-10 mx-auto">
+                    <img id="previewImage" style="max-width: 50px; max-height: auto" class="mx-auto" th:src="${usuarioDirecciones.Usuario.Imagen != null} ? 'data:image/png;base64,' + ${usuarioDirecciones.Usuario.Imagen} : 'https://static-00.iconduck.com/assets.00/profile-default-icon-2048x2045-u3j7s5nj.png'"/>
+                        <div class="card-body">
+                            <!--                            <h3> Usuario</h3>-->
+                            <p class="card-text" th:text="|Nombre: ${usuarioDirecciones.Usuario.Nombre} ${usuarioDirecciones.Usuario.ApellidoPaterno} ${usuarioDirecciones.Usuario.ApellidoMaterno}|"></p>
+                            <p class="card-text" th:text="|Telefono: ${usuarioDirecciones.Usuario.Telefono}|"></p> 
+                            <p class ="card-text" th:text="|Celular: ${usuarioDirecciones.Usuario.Celular}|"></p>
+                            <p class="card-text" th:text="|Email: ${usuarioDirecciones.Usuario.Email}|"></p> 
+
+                            <!--                            <p class="card-text" th:text="|UserName: ${usuarioDirecciones.Usuario.Username}|"></p>-->
+                            <!--                            <a class="btn btn-danger" th:href="@{/Usuario/FormularioEdit?IdUsuario=}+${usuarioDirecciones.Usuario.IdUsuario}+'&IdDireccion='+${IdDireccion=0}">Editar</a>-->
+
+                        </div>
+                    </div>
+                </div>   
+
+
+                <br>
+
+
+
+                <table class="table table-responsive table-danger">
+                    <thead>
+                        <tr>
+                            <th>Direccion</th>
+                            <th>Editar</th> 
+                            <th>Eliminar</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    <a class= "btn btn-danger" th:href="@{/Usuario/FormularioEdit?IdUsuario=}+${usuarioDirecciones.Usuario.IdUsuario}+'&IdDireccion=0'"><i class="bi bi-plus-square"></i> Agregar Direccion</a>
+                    <br>
+                    <tr th:each="direccion : ${usuarioDirecciones.Direcciones}">
+                    <br>
+                    <td th:text="|${direccion.Calle} ${direccion.NumeroInterior} ${direccion.NumeroExterior} ${direccion.colonia.Nombre} ${direccion.colonia.CodigoPostal}|"</td>
+                    <td>
+
+                        <a class="btn btn-danger" th:href="@{/Usuario/FormularioEdit?IdUsuario=}+${usuarioDirecciones.Usuario.IdUsuario}+'&IdDireccion='+${direccion.IdDireccion}"><i class="bi bi-pencil-fill"></i></a>
+
+
+                    </td>    
+
+                    <td><a class="btn btn-danger" th:href="@{/Usuario/DireccionDelete(IdDireccion = ${direccion.IdDireccion})}"><i class="bi bi-trash"></i></a></td>
+
+
+                    </tr>
+                    </tbody>
+                </table> 
+
+
+
+
+
+
+
+            </div>
+        </div>
+    </body>
+</html>

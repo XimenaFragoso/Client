@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://wwww.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate = ~{layout}>
+
+    <body layout:fragment = "body">
+
+
+        <div class ="container">
+            <div class="d-grid gap-2 col-5 mx-auto pt-5">
+                <!--            el atributo accept sirve para identificar que tipo de archivos se pueden recibir-->
+
+                <!--            <button id="mostrarFormulario" class="btn btn-primary" onclick="mostrarFormulario()">Formulario</button>
+                -->
+                <button id="mostrarFormulario" class="btn btn-white border-dark" onclick="mostrarFormulario()">Formulario</button>            
+
+
+
+                <!--            <input id="myInput" type="file" class="form-control mb-2" name="archivo" accept=".txt,.xls, .xlsb, .xlsm, xlsx">-->
+
+                <div id="botones" class="row" style="display:none">
+                    <!--                -->
+                    <div class="btn-group">
+                        <!--                 btn-group-justified-->
+                        <button id="ButtonExcel" class="btn btn-success" type="submit">Excel</button>            
+                        <button id="ButtonTxT" class="btn btn-primary" type="submit">Txt</button>
+
+                    </div>
+                </div>
+
+         
+                <div id="formularioArchivo" style="display:none">
+                    <form action="/Usuario/CargaMasiva" method="post" enctype="multipart/form-data"> 
+                        <input id="myInput" type="file" class="form-control mb-2 text-white" name="archivo" accept=".txt,.xls, .xlsb, .xlsm, xlsx">
+
+                        <button type="submit" class="btn btn-white text-white" id="cargaMasiva">Cargar Archivo</button>
+                    </form>
+                </div>  
+                <div th:if="${listaErrores!= null}">
+                    <div th:if="${listaErrores.isEmpty()}">
+                        <h3> ¡Archivo correcto! (: </h3>
+                        <a th:href="@{/Usuario/CargaMasiva/procesar}" class="btn btn-warning">Procesar</a> 
+                    </div>
+                    <div th:unless="${listaErrores.isEmpty()}">
+                        <h3 class = "pt-4 text-center pb-4"> --- Archivo incorrecto ---</h3>
+                        <table class="table table-responsive">
+                            <thead class="table-dark">
+                            <th class="col-2">Linea</th>
+                            <th>Texto</th>
+                            <th>Error</th>
+                            </thead>
+                            <tbody>
+                                <tr th:each="error: ${listaErrores}">
+                                    <td th:text="${error.Fila}"></td>
+                                    <td th:text="${error.Mensaje}"></td>
+                                    <td th:text="${error.Descripcion}"></td>
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>    
+
+            </div>
+
+            <!--            <a id="yellowButton" class="btn btn-warning" type="submit">Procesar</a>-->
+
+
+
+
+
+            <script>
+                function mostrarFormulario() {
+                    document.getElementById("mostrarFormulario").style.display = "none";
+                    document.getElementById("botones").style.display = "block";
+                }
+
+                let tipoArchivo = "";
+                //
+                document.getElementById("ButtonExcel").addEventListener("click", function () {
+                    tipoArchivo = "xlsx";
+                    
+                    document.getElementById("myInput").setAttribute("accept", ".xlsx");
+
+                    document.getElementById('myInput').style.background = '#198754';
+                    document.getElementById('cargaMasiva').style.background = '#198754';
+                    document.getElementById("formularioArchivo").style.display = "block";
+
+
+                });
+
+                document.getElementById("ButtonTxT").addEventListener("click", function () {
+                    tipoArchivo = "txt";
+
+                    document.getElementById("myInput").setAttribute("accept", ".txt");
+
+                    document.getElementById('myInput').style.background = '#0d6efd';
+                    document.getElementById('cargaMasiva').style.background = '#0d6efd';
+                    document.getElementById("formularioArchivo").style.display = "block";
+                });
+
+                document.getElemntById("myInput").addEventListener("change", function () {
+                    if (this.files.length > 0) {
+                        var fileName = this.files[0].name;
+                        var fileExtension = fileName.split('.').pop().toLowerCase();
+
+                        if (fileExtension !== tipoArchivo) {
+                            alert("Seleccione un archivo" + tipoArchivo.toUpperCase() + " valido");
+                            this.value = "";
+                        }
+                    }
+                });
+
+
+
+
+                //            para que cambien los colores de los botones
+                //            document.getElementById('greenButton').addEventListener('click', function () {
+                //                document.getElementById('myInput').style.background = 'green';
+                //            });
+                //
+                //            document.getElementById('blueButton').addEventListener('click', function () {
+                //                document.getElementById('myInput').style.background = 'blue';
+                //            });
+
+            </script>
+
+
+    </body>
+</html>

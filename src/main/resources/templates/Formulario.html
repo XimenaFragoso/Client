@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultra.net.nz/thyemeleaf/layout"
+      layout:decorate = ~{layout}>
+
+
+    <body layout:fragment = "body">
+        <div class="container p-5 my-5 bg-dark text-white">
+            <h1 class = "formulario">Formulario</h1>
+            <form th:action="@{/Usuario/Form}" method="post" th:object="${usuarioDireccion}" action="/action_page.php" enctype="multipart/form-data">
+
+                <input type="hidden" th:field="*{Usuario.IdUsuario}">
+                <input type="hidden" th:field="*{Direccion.IdDireccion}">
+
+
+
+
+                <!--                agregar usuario y que solo salga la parte de usuario del formulario-->
+                <div class = "row" th:if="${(usuarioDireccion.Usuario.IdUsuario == 0 && usuarioDireccion.Direccion.IdDireccion == 0)
+                     || (usuarioDireccion.Usuario.IdUsuario != 0 && usuarioDireccion.Direccion.IdDireccion == -1)}">  
+                    <div class="row">
+                            
+<!--                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTNT31I-b-Jdf8bjPM-mm-V1qCpb-oudRLvtw&s" style="max-height: 250px; object-fit: contain" class="card-img-top" alt="Imagen del usuario">-->
+                        <img id="previewImage" style="max-width: 300px; max-height: auto" class="mx-auto" th:src="${usuarioDireccion.Usuario.Imagen != null} ?
+                                 'data:image/png;base64,' + ${usuarioDireccion.Usuario.Imagen} :
+                                 'https://static-00.iconduck.com/assets.00/profile-default-icon-2048x2045-u3j7s5nj.png'" />    
+                        
+                            
+                        <div class="input-group mb-3">
+                            <input type="file" class="form-control mb-2" name="imagenFile" id="imagenFile">
+                            <label class="input-group-text" for="inputGroupFile02">Upload</label>
+                        </div>
+                        </div>
+
+
+                        <div class="mb-3">
+                            <label for="nombre" class="form-label">Nombre:</label>
+                            <input type="text" class="form-control" id="nombre" placeholder="Enter nombre" th:field="*{Usuario.Nombre}">
+<!--                             onkeypress="return SoloLetras(event, this)"-->
+                            <span th:if="${#fields.hasErrors('Usuario.Nombre')}" th:errors="*{Usuario.Nombre}"> </span>
+                            <span id="NombreUsuarioError" class="text-danger"></span>
+
+                        </div>
+                    
+
+                    <div class="row">
+                        <div class="col">
+                            <label for="nombre" class="form-label">ApellidoPaterno:</label>
+                            <input type="text" class="form-control" placeholder="Enter apellidoPaterno" th:field="*{Usuario.ApellidoPaterno}">
+                            <span th:if="${#fields.hasErrors('Usuario.ApellidoPaterno')}" th:errors="*{Usuario.ApellidoPaterno}"</span>
+<!--                            onkeypress="return SoloLetras(event, this)"-->
+
+                            <!--    onkeypress="return SoloLetras(event, this)"-->
+
+                        </div>
+                        <div class="col">
+                            <label for="apellidoM" class="form-label">ApellidoMaterno:</label>
+                            <input type="text" class="form-control" placeholder="Enter apellidoMaterno" th:field="*{Usuario.ApellidoMaterno}">
+                            <span th:if="${#fields.hasErrors('Usuario.ApellidoMaterno')}" th:errors="*{Usuario.ApellidoMaterno}"> </span>
+
+                            <!--     onkeypress="return SoloLetras(event, this)"-->
+
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col">
+                            <label for="fechaNc" class="form-label">Fecha de Nacimiento:</label>
+                            <input type="date" class="form-control" placeholder="Enter fechanacimiento" th:field="*{Usuario.FechaNacimiento}">
+                            <span th:if="${#fields.hasErrors('Usuario.FechaNacimiento')}" th:errors="*{Usuario.FechaNacimiento}"> </span>
+
+                            <!--    onclick="return Fecha(event, this)"-->
+                        </div>
+                        <div class="col">
+                            <label for="username" class="form-label">UserName:</label>
+                            <input type="text" class="form-control" placeholder="Enter username" th:field="*{Usuario.UserName}">
+<!--                            onblur="return UserNombre(event, this)"-->
+                            <span th:if="${#fields.hasErrors('Usuario.UserName')}" th:errors="*{Usuario.UserName}"> </span>
+                            <span id="UsuarioNombreError" class="text-danger"></span>
+
+                        </div> 
+                        <div class="col-4">
+                            <label for="email" class="form-label">Email:</label>
+                            <input type="text" class="form-control" placeholder="Enter email" th:field="*{Usuario.Email}">
+<!--                            onblur="return Email(event, this)"-->
+                            <span th:if="${#fields.hasErrors('Usuario.Email')}" th:errors="*{Usuario.Email}"> </span>
+                            <span id="EmailUsuarioError" class="text-danger"> </span>
+
+                            <!--     onblur="return Email(event, this)"-->
+                        </div>
+                    </div>    
+
+                    <div class="row">
+                        <div class="col">
+                            <label for="password" class="form-label">Password:</label>
+                            <input type="password" class="form-control" placeholder="Enter password" th:field="*{Usuario.Password}">
+                            <span th:if="${#fields.hasErrors('Usuario.Password')}" th:errors="*{Usuario.Password}"> </span>                        
+                        </div>
+                        <div class="col">
+                            <label for="sexo" class="form-label">Sexo:</label>
+                            <input type="text" class="form-control" placeholder="Enter sexo" th:field="*{Usuario.Sexo}">  
+                            <span th:if="${#fields.hasErrors('Usuario.Sexo')}" th:errors="*{Usuario.Sexo}"> </span>
+
+                        </div> 
+                        <div class="col">
+                            <label for="telefono" class="form-label">Telefono:</label>
+                            <input type="text" class="form-control" placeholder="Enter telefono" th:field="*{Usuario.Telefono}">
+                            <span th:if="${#fields.hasErrors('Usuario.Telefono')}" th:errors="*{Usuario.Telefono}"> </span>                        
+                        </div>
+                    </div>   
+
+                    <div class="row">
+                        <div class="col">
+                            <label for="celular" class="form-label">Celular:</label>
+                            <input type="text" class="form-control" placeholder="Enter celular" th:field="*{Usuario.Celular}">
+                            <span th:if="${#fields.hasErrors('Usuario.Celular')}" th:errors="*{Usuario.Celular}"> </span>
+                        </div>
+                        <div class="col">
+                            <label for="curp" class="form-label">CURP:</label>
+                            <input type="text" class="form-control" placeholder="Enter CURP" th:field="*{Usuario.CURP}">
+                            <span th:if="${#fields.hasErrors('Usuario.CURP')}" th:errors="*{Usuario.CURP}"> </span>
+                        </div>
+                        <div class="col">
+                            <!--                        <label for="idroll" class="form-label">IdRoll:</label>
+                                                    <input type="number" class="form-control" placeholder="Enter idroll" th:field="*{Usuario.Roll.IdRoll}">
+                            -->
+                            <!--                        <label for="PasswordAlumno" class="form-label fw-bold">Semestre</label>-->
+                            <label for="idroll" class="form-label">Roll:</label>
+                            <select id="rollUsuario" class="form-select form-select" aria-label="Small select example" th:field="*{Usuario.Roll.IdRoll}">
+                                <option value=0 selected>Selecciona un Roll</option>
+                                <option th:each="Roll : ${roles}" th:value="${Roll.IdRoll}" th:text="${Roll.Nombre}">One</option>
+                            </select>      
+
+                        </div>  
+                    </div>
+
+                </div>              
+                <div class = "row" th:if="${(usuarioDireccion.Usuario.IdUsuario != 0 && usuarioDireccion.Direccion.IdDireccion >0)
+                     || (usuarioDireccion.Usuario.IdUsuario != 0 && usuarioDireccion.Direccion.IdDireccion == 0) 
+                     || (usuarioDireccion.Usuario.IdUsuario == 0 && usuarioDireccion.Direccion.IdDireccion == 0)}">
+
+
+                    <h2 class = "direccion m-2">Dirección</h2>
+
+                    <div class="row">
+                        <div class ="col">
+
+                            <label for="Pais11" class="form-label">País:</label>
+                            <select id="Pais11" class="form-select form-select" aria-label="Small select example" th:field="*{Direccion.Colonia.Municipio.Estado.Pais.IdPais}">
+                                <option value=0 selected>Selecciona un País</option>
+                                <option th:each="Pais : ${paises}" th:value="${Pais.IdPais}" th:text="${Pais.Nombre}">One</option>
+                            </select> 
+                        </div>
+                        <div class ="col">
+
+                            <label for="Estado11" class="form-label">Estado:</label>
+                            <select id="Estado11" class="form-select form-select" aria-label="Small select example" th:field="*{Direccion.Colonia.Municipio.Estado.IdEstado}">
+                                <option value=0 selected>Selecciona un Estado</option>
+                                <option th:each="estado : ${estados}" th:value="${estado.IdEstado}" th:text="${estado.Nombre}">One</option>
+                            </select> 
+                        </div>                             
+
+                    </div>        
+                    <div class="row">
+                        <div class ="col">
+
+                            <label for="Municipio11" class="form-label">Municipio:</label>
+                            <select id="Municipio11" class="form-select form-select" aria-label="Small select example" th:field="*{Direccion.Colonia.Municipio.IdMunicipio}">
+                                <option value=0 selected>Selecciona un Municipio</option>
+                                <option th:each="municipio : ${municipios}" th:value="${municipio.IdMunicipio}" th:text="${municipio.Nombre}">One</option>
+                            </select> 
+                        </div>
+
+                        <div class ="col">
+
+                            <label for="Colonia11" class="form-label">Colonia:</label>
+                            <select id="Colonia11" class="form-select form-select" aria-label="Small select example" th:field="*{Direccion.Colonia.IdColonia}">
+                                <option value=0 selected>Selecciona un Colonia</option>
+                                <option th:each="colonia : ${colonias}" th:value="${colonia.IdColonia}" th:text="${colonia.Nombre}">One</option>
+
+                            </select> 
+                        </div> 
+
+                        <div class="col">
+                            <label for="CodigoPostal" class="form-label">Codigo Postal:</label>
+                            <input id="CodigoPostal" type="text" class="form-control" placeholder="Enter codigo postal" th:field="*{Direccion.Colonia.CodigoPostal}">
+                        </div>
+
+
+
+                    </div>        
+
+
+
+
+                    <div class="row">
+                        <div class="col">
+                            <label for="calle" class="form-label">Calle:</label>
+                            <input type="text" class="form-control" placeholder="Enter calle" th:field="*{Direccion.Calle}">
+                        </div>
+                        <div class="col">
+                            <label for="numInt" class="form-label">Numero Interior:</label>
+                            <input type="text" class="form-control" placeholder="Enter numero interior" th:field="*{Direccion.NumeroInterior}">
+
+                        </div> 
+                        <div class="col">
+                            <label for="numExt" class="form-label">Numero Exterior:</label>
+                            <input type="text" class="form-control" placeholder="Enter numero exterior" th:field="*{Direccion.NumeroExterior}">
+                        </div>
+
+                    </div>        
+                </div>
+
+                <label class="form-check-label">
+                    <br>
+                    <input class="form-check-input" type="checkbox" name="remember"> Remember me
+
+                </label>
+
+                <button type="submit" class="btn btn-danger">Insertar Usuario</button>
+
+            </form>
+
+        </div>
+
+
+        <!--Sirve para letras y espacio pero no caracteres-->
+        <script>
+            function SoloLetras(event, elemento) {
+                //hace que vaya validando letra por letra
+                var key = event.key;
+                var regEx = /^([a-zA-Z]+)(\s[a-zA-Z]+)*$/;
+                var spanError = document.getElementById("NombreUsuarioError");
+
+                if (key.match(regEx)) {
+                    console.log("Todo bien");
+                    spanError.innerHTML = "";
+                    return true;
+                } else {
+                    console.log("Todo mal");
+                    spanError.innerHTML = "Solo Letras";
+                    return false;
+                }
+            }
+
+            //Sirve para ingresar fechas 2023-09-08 2023/09/08 2023.09.09
+
+            function Fecha(event, elemento) {
+                var key = event.key;
+                var regEx = /^\d{4}([\-/.])(0?[1-9]|1[1-2])\1(3[01]|[12][0-9]|0?[1-9])$/;
+                var spanError = document.getElementById("FechaUsuarioError");
+
+                if (key.match(regEx)) {
+                    console.log("Todo bien");
+                    return true;
+                } else {
+                    console.log("Todo mal");
+                    spanError.innerHTML = "Solo números";
+                    return false;
+                }
+            }
+
+            //El usuario debe tener un _ o un "." pero no puede iniciar con ellos
+            //y tampoco pueden ir juntos 
+            function UserNombre(event, elemento) {
+                var inputText = elemento.value;
+                var regEx = /^[a-zA-Z0-9]+([._]?[a-zA-Z0-9]+)*$/;
+                var spanError = document.getElementById("UsuarioNombreError");
+
+                if (inputText.match(regEx)) {
+                    console.log("User correcto");
+                    spanError.innerHTML = "";
+                    return true;
+                } else {
+                    console.log("User incorrecto");
+                    spanError.innerHTML = "UserName invalido";
+                    return false;
+                }
+            }
+
+
+            //Ejemplo de correo Ximena4-fragoso@hotmail.com            
+            //onblur 
+            function Email(event, elemento) {
+                var inputText = elemento.value;
+                var regEx = /^[^@\s]+@[^@\s]+\.[^@\s]+$/;
+                var spanError = document.getElementById("EmailUsuarioError");
+
+                if (inputText.match(regEx)) {
+                    console.log("Todo bien");
+                    spanError.innerHTML = "";
+                    return true;
+                } else {
+                    console.log("Todo mal");
+                    spanError.innerHTML = "correo invalido";
+                    return false;
+                }
+            }
+
+//        Mínimo ocho y máximo 10 caracteres, al menos una letra mayúscula, 
+//                una letra minúscula, un número y un carácter especial:            
+
+            function Contraseña(event, elemento) {
+                var key = event.keyCode;
+                var regEx = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,10}$/;
+
+                if (key.match(regEx)) {
+                    console.log("Contraseña Valida");
+                    return true;
+                } else {
+                    console.log("Contraseña invalida");
+                    return false;
+                }
+            }
+
+            $(document).ready(function () {
+//                ajax -- proceso asincrono
+//                     -- genera respuestas JSON
+//                     -- permite comunicarse con el servidor en segundo plano
+                $("#Pais11").change(function () {
+                    $.ajax({
+                        type: 'GET',
+                        url: "/Usuario/EstadoByIdPais/" + $("#Pais11").val(),
+                        datatype: "json",
+                        success: function (data, textStatus, jqXHR) {
+                            $("#Estado11").empty();
+                            $("#Estado11").append("<option value=0>Selecciona un estado</option>")
+                            $.each(data.objects, function (i, estado) {
+                                $("#Estado11").append("<option value=" + estado.idEstado + ">" + estado.nombre + "</option>");
+                            });
+                        },
+                        error: function (jqXHR, textStatus, errorThrown) {
+                            alert("algo malio sal");
+                        }
+
+                    }
+                    );
+                });
+
+
+
+                $("#Estado11").change(function () {
+                    $.ajax({
+                        type: 'GET',
+                        url: "/Usuario/MunicipioByIdEstado/" + $("#Estado11").val(),
+                        datatypec: "json",
+                        success: function (data, textStatus, jqXHR) {
+                            $("#Municipio11").empty();
+                            $("#Municipio11").append("<option value=0>Selecciona un municipio</option>")
+                            $.each(data.objects, function (i, municipio) {
+                                $("#Municipio11").append("<option value=" + municipio.idMunicipio + ">" + municipio.nombre + "</option>");
+
+                            });
+
+                        },
+                        error: function (jqXHR, textStatus, errorThrown) {
+                            alert("Algo salió mal");
+                        }
+                    }
+                    );
+                });
+
+                $("#Municipio11").change(function () {
+                    $.ajax({
+                        type: 'GET',
+                        url: "/Usuario/ColoniaByIdMunicipio/" + $("#Municipio11").val(),
+                        datatypec: "json",
+                        success: function (data, textStatus, jqXHR) {
+                            $("#Colonia11").empty();
+                            $("#Colonia11").append("<option value=0>Selecciona una Colonia</option>")
+                            $.each(data.objects, function (i, colonia) {
+                                $("#Colonia11").append("<option value=" + colonia.idColonia + " data-cp=" + colonia.codigoPostal + ">" + colonia.nombre + "</option>");
+
+                            });
+                        },
+                        error: function (jqXHR, textStatus, errorThrown) {
+                            alert("Algo salió mal");
+                        }
+                    }
+                    );
+                });
+
+
+                $("#Colonia11").change(function () {
+                    $("#CodigoPostal").val($("#Colonia11 option:selected").data("cp"));
+                });
+
+
+            });
+
+
+
+
+        </script>
+
+
+
+    </body>
+</html>
