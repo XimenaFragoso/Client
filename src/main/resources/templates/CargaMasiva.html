@@ -36,12 +36,8 @@
                         <button type="submit" class="btn btn-white text-white" id="cargaMasiva">Cargar Archivo</button>
                     </form>
                 </div>  
-                <div th:if="${listaErrores!= null}">
-                    <div th:if="${listaErrores.isEmpty()}">
-                        <h3> ¡Archivo correcto! (: </h3>
-                        <a th:href="@{/Usuario/CargaMasiva/procesar}" class="btn btn-warning">Procesar</a> 
-                    </div>
-                    <div th:unless="${listaErrores.isEmpty()}">
+                <div th:if="${bien == null}">
+                    <div th:if="${listaErrores != null && !listaErrores.isEmpty()}">
                         <h3 class = "pt-4 text-center pb-4"> --- Archivo incorrecto ---</h3>
                         <table class="table table-responsive">
                             <thead class="table-dark">
@@ -60,6 +56,13 @@
                         </table>
                     </div>
                 </div>    
+                
+<!--                                    model.addAttribute("bien", true);-->
+
+                <div th:unless="${bien == null}">
+                    <h4> --- ¡Archivo correcto! (: ---</h4>
+                    <a th:href="@{/Usuario/CargaMasiva/Procesar}" class="btn btn-warning">Procesar archivo</a>
+                </div>
 
             </div>
 

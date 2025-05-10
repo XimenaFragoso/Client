@@ -321,11 +321,11 @@
                 $("#Pais11").change(function () {
                     $.ajax({
                         type: 'GET',
-                        url: "/Usuario/EstadoByIdPais/" + $("#Pais11").val(),
+                        url: "http://localhost:8081/estadoapi/EstadoByIdPais/" + $("#Pais11").val(),
                         datatype: "json",
                         success: function (data, textStatus, jqXHR) {
                             $("#Estado11").empty();
-                            $("#Estado11").append("<option value=0>Selecciona un estado</option>")
+                            $("#Estado11").append("<option value=0>Selecciona un Estado</option>")
                             $.each(data.objects, function (i, estado) {
                                 $("#Estado11").append("<option value=" + estado.idEstado + ">" + estado.nombre + "</option>");
                             });
@@ -343,11 +343,11 @@
                 $("#Estado11").change(function () {
                     $.ajax({
                         type: 'GET',
-                        url: "/Usuario/MunicipioByIdEstado/" + $("#Estado11").val(),
+                        url: "http://localhost:8081/municipioapi/MunicipioByIdEstado/" + $("#Estado11").val(),
                         datatypec: "json",
                         success: function (data, textStatus, jqXHR) {
                             $("#Municipio11").empty();
-                            $("#Municipio11").append("<option value=0>Selecciona un municipio</option>")
+                            $("#Municipio11").append("<option value=0>Selecciona un Municipio</option>")
                             $.each(data.objects, function (i, municipio) {
                                 $("#Municipio11").append("<option value=" + municipio.idMunicipio + ">" + municipio.nombre + "</option>");
 
@@ -364,7 +364,7 @@
                 $("#Municipio11").change(function () {
                     $.ajax({
                         type: 'GET',
-                        url: "/Usuario/ColoniaByIdMunicipio/" + $("#Municipio11").val(),
+                        url: "http://localhost:8081/coloniaapi/ColoniaByIdMunicipio/" + $("#Municipio11").val(),
                         datatypec: "json",
                         success: function (data, textStatus, jqXHR) {
                             $("#Colonia11").empty();
